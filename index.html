@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Husn-e-Jaana ki Tareef Mumkin Nai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============ ONE THEME — CANDLELIGHT & CHAMPAGNE GOLD ============ */
+  :root{
+    --bg:#15100d;
+    --bg-2:#1d1612;
+    --panel:#221a15;
+    --glow-warm:#3a281b;
+    --glow-rose:#3a1f23;
+
+    --cream:#f1e8d7;
+    --cream-soft:#c9bca4;
+    --taupe:#92846f;
+
+    --gold:#c9a35d;
+    --gold-light:#eccb86;
+    --gold-deep:#8c6c34;
+    --gold-foil:#dcb978;
+
+    --rose:#d79ca2;
+    --rose-deep:#b06f78;
+
+    --card:rgba(248,240,226,.045);
+    --card-2:rgba(248,240,226,.07);
+    --card-solid:#211913;
+    --line:rgba(201,163,93,.22);
+    --line-strong:rgba(201,163,93,.42);
+
+    --shadow:0 34px 80px rgba(0,0,0,.62);
+    --shadow-sm:0 16px 38px rgba(0,0,0,.46);
+    --maxw:740px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg); color:var(--cream);
+    font-family:'Cormorant Garamond', Georgia, serif; font-size:19px; line-height:1.78;
+    overflow-x:hidden; position:relative;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold);color:#1b130c;}
+
+  /* ---- atmosphere: candlelight glows, vignette, grain, dust ---- */
+  #ambience{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  #ambience .glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;mix-blend-mode:screen;}
+  .glow.g1{width:60vw;height:60vw;left:-18vw;top:-12vh;background:radial-gradient(circle,var(--glow-warm),transparent 68%);animation:breathe 14s ease-in-out infinite;}
+  .glow.g2{width:55vw;height:55vw;right:-16vw;top:34vh;background:radial-gradient(circle,var(--glow-rose),transparent 70%);animation:breathe 17s ease-in-out infinite reverse;}
+  .glow.g3{width:50vw;height:50vw;left:8vw;bottom:-18vh;background:radial-gradient(circle,var(--glow-warm),transparent 70%);animation:breathe 19s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{transform:scale(1);opacity:.42}50%{transform:scale(1.14);opacity:.62}}
+  #vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 100% at 50% 0%,transparent 52%,rgba(0,0,0,.5) 100%);}
+  #grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.06;mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+  #dust{position:fixed;inset:0;z-index:3;pointer-events:none;}
+
+  /* ---- scroll progress (thin gold thread) ---- */
+  #progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:90;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold-light),var(--rose));
+    box-shadow:0 0 12px rgba(236,203,134,.6);}
+
+  /* ---- chapter rail ---- */
+  #chapters{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:80;display:none;flex-direction:column;gap:16px;}
+  #chapters a{width:8px;height:8px;border-radius:50%;background:transparent;border:1.4px solid var(--gold);opacity:.45;transition:all .35s ease;position:relative;}
+  #chapters a.active{opacity:1;background:var(--gold);transform:scale(1.4);box-shadow:0 0 10px rgba(236,203,134,.6);}
+  #chapters a span{position:absolute;right:20px;top:50%;transform:translateY(-50%);white-space:nowrap;font-family:'Fraunces',serif;
+    font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--cream-soft);opacity:0;pointer-events:none;transition:opacity .3s ease;}
+  #chapters a:hover span{opacity:1;}
+  @media(min-width:1100px){#chapters{display:flex;}}
+
+  /* ---- shared ornament + label ---- */
+  .orn{display:flex;align-items:center;justify-content:center;gap:16px;color:var(--gold);margin:0 auto;}
+  .orn::before,.orn::after{content:"";height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold));}
+  .orn::after{background:linear-gradient(90deg,var(--gold),transparent);}
+  .orn .d{font-size:11px;letter-spacing:4px;color:var(--gold-light);}
+  .label{font-family:'Fraunces',serif;font-weight:500;font-size:11.5px;letter-spacing:4.5px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:18px;display:inline-block;position:relative;padding-left:34px;}
+  .label::before{content:"";position:absolute;left:0;top:50%;width:24px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+  .label.c{display:block;text-align:center;padding-left:0;}
+  .label.c::before{display:none;}
+
+  .foil{background:linear-gradient(102deg,var(--gold-deep),var(--gold-light) 46%,var(--rose) 92%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;}
+
+  /* ===================== COVER ===================== */
+  #cover{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:28px;background:var(--bg);transition:opacity 1.3s ease,visibility 1.3s ease;overflow:hidden;}
+  #cover.gone{opacity:0;visibility:hidden;}
+  .cover-frame{position:relative;border:1px solid var(--line);padding:46px 26px 40px;max-width:540px;width:100%;border-radius:3px;
+    background:linear-gradient(180deg,rgba(34,26,21,.5),rgba(21,16,13,.2));backdrop-filter:blur(4px);
+    animation:coverIn 1.6s cubic-bezier(.2,.7,.2,1) both;}
+  .cover-frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);border-radius:2px;pointer-events:none;}
+  @keyframes coverIn{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:none}}
+  /* arched portrait (mehrab) */
+  .arch{width:150px;height:202px;margin:0 auto 26px;border-radius:75px 75px 6px 6px;overflow:hidden;position:relative;
+    border:1.5px solid var(--gold);box-shadow:var(--shadow),0 0 0 6px rgba(201,163,93,.08);background:var(--panel);}
+  .arch img{width:100%;height:100%;object-fit:cover;filter:saturate(.96) contrast(1.03) brightness(.98);}
+  .arch::after{content:"";position:absolute;inset:0;border-radius:75px 75px 6px 6px;
+    box-shadow:inset 0 0 46px rgba(0,0,0,.55),inset 0 0 0 1px rgba(236,203,134,.25);}
+  .cover-title{font-family:'Noto Nastaliq Urdu',serif;direction:rtl;font-weight:600;line-height:2.15;
+    font-size:clamp(25px,7.4vw,42px);margin-top:20px;position:relative;
+    background:linear-gradient(102deg,var(--gold-deep),var(--gold-light) 50%,var(--rose));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:220% auto;
+    animation:shimmer 7s linear infinite;}
+  @keyframes shimmer{to{background-position:-220% center}}
+  .cover-sub{font-style:italic;color:var(--cream-soft);font-size:clamp(16px,4.4vw,20px);margin-top:10px;letter-spacing:.2px;}
+  .enter-btn{margin-top:32px;cursor:pointer;border:1px solid var(--gold);background:transparent;color:var(--gold-light);
+    font-family:'Fraunces',serif;font-weight:500;font-size:13.5px;letter-spacing:3.5px;text-transform:uppercase;
+    padding:15px 42px;border-radius:2px;transition:color .5s ease;position:relative;overflow:hidden;}
+  .enter-btn span{position:relative;z-index:2;transition:color .5s ease;}
+  .enter-btn::before{content:"";position:absolute;inset:0;z-index:1;transform:translateY(101%);transition:transform .5s cubic-bezier(.2,.7,.2,1);
+    background:linear-gradient(120deg,var(--gold-deep),var(--gold-light));}
+  .enter-btn:hover::before,.enter-btn:focus-visible::before{transform:translateY(0);}
+  .enter-btn:hover span,.enter-btn:focus-visible span{color:#1b130c;}
+  .wink{margin-top:24px;display:inline-block;font-family:'Fraunces',serif;font-style:italic;font-size:14px;letter-spacing:.3px;
+    color:var(--gold-light);background:rgba(201,163,93,.08);padding:9px 20px;border-radius:999px;
+    border:1px solid var(--line-strong);}
+  .wink b{font-weight:600;font-style:normal;color:var(--rose);}
+
+  /* ===================== MAIN ===================== */
+  main{position:relative;z-index:5;opacity:0;transition:opacity 1.5s ease .3s;}
+  main.show{opacity:1;}
+  section{padding:104px 26px;max-width:var(--maxw);margin:0 auto;}
+  @media(max-width:640px){section{padding:84px 24px;}}
+  h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(33px,8.4vw,54px);line-height:1.07;letter-spacing:-.6px;margin-bottom:28px;color:var(--cream);}
+  h2 em{font-style:italic;color:var(--gold-light);}
+  .urdu-h{font-family:'Noto Nastaliq Urdu',serif;direction:rtl;line-height:2.1;font-weight:600;font-size:clamp(27px,7vw,44px);text-align:center;
+    background:linear-gradient(102deg,var(--gold-deep),var(--gold-light) 55%,var(--rose));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px;}
+  p.body{font-size:clamp(17.5px,4.5vw,20.5px);margin-bottom:20px;color:var(--cream);}
+  .dropcap::first-letter{font-family:'Fraunces',serif;font-size:4.6em;line-height:.76;float:left;margin:10px 14px 0 0;
+    background:linear-gradient(160deg,var(--gold-light),var(--gold-deep));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:500;}
+  .quote{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(21px,5.4vw,29px);
+    color:var(--gold-light);line-height:1.42;margin:30px 0;text-align:center;position:relative;padding:0 18px;}
+  .quote::before,.quote::after{content:'"';color:var(--gold);opacity:.5;font-size:1.1em;}
+  .reveal{opacity:0;transform:translateY(42px);transition:opacity 1.05s cubic-bezier(.2,.7,.2,1),transform 1.05s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+  .scroll-hint{text-align:center;color:var(--taupe);font-style:italic;margin-top:34px;letter-spacing:1px;animation:bob 2.8s ease-in-out infinite;font-size:15px;}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+  /* ---- gaana (now playing) ---- */
+  .gaana{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:46px 28px;text-align:center;
+    backdrop-filter:blur(8px);box-shadow:var(--shadow);overflow:hidden;}
+  .gaana::after{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;
+    background:radial-gradient(120% 80% at 50% -10%,rgba(236,203,134,.12),transparent 60%);}
+  .disc-wrap{position:relative;width:96px;height:96px;margin:0 auto 24px;}
+  .disc{width:96px;height:96px;border-radius:50%;
+    background:repeating-radial-gradient(circle at 50% 50%,#241c17 0 2px,#322820 2px 4px);
+    position:relative;animation:spin 7s linear infinite;box-shadow:0 10px 26px rgba(0,0,0,.5),inset 0 0 0 1px rgba(236,203,134,.12);}
+  .disc::after{content:"";position:absolute;inset:38px;border-radius:50%;
+    background:radial-gradient(circle,var(--gold-light),var(--gold-deep));box-shadow:0 0 14px rgba(236,203,134,.4);}
+  .tonearm{position:absolute;top:-4px;right:6px;width:60px;height:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold-light));
+    border-radius:3px;transform-origin:right center;transform:rotate(24deg);box-shadow:0 1px 4px rgba(0,0,0,.4);}
+  .tonearm::after{content:"";position:absolute;left:-3px;top:-2px;width:8px;height:8px;border-radius:50%;background:var(--gold-light);}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .gaana .now{font-family:'Fraunces',serif;font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .gaana .lyric{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(18px,5vw,25px);color:var(--cream);line-height:1.55;}
+
+  /* ---- timeline ---- */
+  .tl{position:relative;margin-top:36px;padding-left:40px;}
+  .tl::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:1.5px;
+    background:linear-gradient(180deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent);}
+  .node{position:relative;margin-bottom:34px;}
+  .node::before{content:"";position:absolute;left:-38px;top:8px;width:13px;height:13px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--gold);box-shadow:0 0 0 4px var(--bg),0 0 12px rgba(236,203,134,.45);transition:all .4s ease;}
+  .node.in::before{background:var(--gold-light);}
+  .node h3{font-family:'Fraunces',serif;font-weight:500;font-size:22px;color:var(--cream);margin-bottom:5px;letter-spacing:.1px;}
+  .node p{color:var(--cream-soft);font-size:17.5px;line-height:1.66;}
+  .node .em{color:var(--gold-light);font-style:italic;}
+
+  /* ---- scratch ---- */
+  .scratch-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px;}
+  .scratch{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1/1;box-shadow:var(--shadow-sm);border:1px solid var(--line-strong);}
+  .scratch .note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+    font-family:'Fraunces',serif;font-style:italic;font-size:clamp(15px,3.9vw,18px);color:var(--gold-light);
+    background:var(--card-solid);line-height:1.5;}
+  .scratch canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .85s ease;}
+  .scratch.done canvas{opacity:0;pointer-events:none;}
+  .tip{text-align:center;color:var(--taupe);font-style:italic;margin:6px 0 0;font-size:15px;}
+
+  /* ---- jokes ---- */
+  .jokes{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  .joke{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 24px;text-align:center;
+    backdrop-filter:blur(8px);box-shadow:var(--shadow-sm);transition:transform .4s ease,border-color .4s ease;}
+  .joke:hover{border-color:var(--line-strong);}
+  .jbtn{cursor:pointer;border:1px solid var(--gold);background:transparent;color:var(--gold-light);font-family:'Fraunces',serif;font-weight:500;
+    font-size:12.5px;letter-spacing:2px;text-transform:uppercase;padding:13px 26px;border-radius:2px;transition:all .4s ease;}
+  .jbtn:hover{background:var(--gold);color:#1b130c;border-color:var(--gold);}
+  .jresp{max-height:0;overflow:hidden;opacity:0;transition:all .55s ease;color:var(--cream-soft);font-size:17.5px;line-height:1.66;}
+  .jresp.open{max-height:360px;opacity:1;margin-top:18px;}
+  .switch{display:inline-flex;align-items:center;gap:14px;cursor:pointer;user-select:none;}
+  .track{width:60px;height:31px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line-strong);position:relative;transition:all .35s ease;}
+  .knob{position:absolute;top:2px;left:2px;width:25px;height:25px;border-radius:50%;background:var(--gold);transition:all .35s ease;box-shadow:0 2px 6px rgba(0,0,0,.4);}
+  .switch.on .track{background:linear-gradient(120deg,var(--rose-deep),var(--gold-deep));}
+  .switch.on .knob{left:31px;background:var(--gold-light);}
+  .switch em{color:var(--cream-soft);font-style:italic;}
+  .calc{font-family:'Fraunces',serif;font-size:25px;color:var(--gold-light);letter-spacing:1px;min-height:34px;}
+
+  /* ---- plans ---- */
+  .chips{display:flex;flex-direction:column;gap:14px;margin-top:12px;}
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;box-shadow:var(--shadow-sm);
+    backdrop-filter:blur(6px);display:flex;align-items:center;gap:16px;transition:transform .4s ease,border-color .4s ease;}
+  .chip:hover{border-color:var(--line-strong);}
+  .chip .ic{font-size:23px;filter:saturate(.85);}
+  .chip b{font-family:'Fraunces',serif;font-weight:500;color:var(--gold-light);}
+  .chip span.t{color:var(--cream-soft);}
+
+  /* ---- sher ---- */
+  .sher{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:52px 28px;text-align:center;
+    box-shadow:var(--shadow);backdrop-filter:blur(8px);overflow:hidden;}
+  .sher::after{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 0%,rgba(215,156,162,.1),transparent 62%);}
+  .sher-ur{font-family:'Noto Nastaliq Urdu',serif;direction:rtl;line-height:2.65;font-size:clamp(19px,5.3vw,30px);color:var(--cream);margin-bottom:20px;font-weight:500;}
+  .sher-roman{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,4.3vw,20px);color:var(--cream-soft);line-height:1.62;}
+
+  /* ---- gallery ---- */
+  .gal-cap{text-align:center;font-family:'Fraunces',serif;font-style:italic;color:var(--cream-soft);margin-bottom:30px;font-size:19px;}
+  #galGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .gcard{position:relative;border-radius:8px 8px 6px 6px;overflow:hidden;aspect-ratio:3/4;box-shadow:var(--shadow-sm);cursor:pointer;
+    border:1px solid var(--line);transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s ease,border-color .5s ease;}
+  .gcard:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--line-strong);}
+  .gcard img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.96) brightness(.96);transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .6s ease;}
+  .gcard:hover img{transform:scale(1.07);filter:saturate(1) brightness(1.02);}
+  .gcard figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 14px;font-family:'Fraunces',serif;font-style:italic;
+    font-size:13px;color:var(--cream);line-height:1.4;background:linear-gradient(0deg,rgba(15,10,8,.88),transparent);
+    transform:translateY(8px);opacity:.85;transition:all .5s ease;}
+  .gcard:hover figcaption{transform:none;opacity:1;}
+  .gcard .plus{position:absolute;top:11px;right:11px;width:28px;height:28px;border-radius:50%;background:rgba(21,16,13,.5);
+    color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-size:16px;opacity:0;transition:opacity .3s ease;
+    border:1px solid var(--line-strong);backdrop-filter:blur(4px);}
+  .gcard:hover .plus{opacity:1;}
+
+  /* ---- lightbox ---- */
+  #lightbox{position:fixed;inset:0;z-index:100;background:rgba(10,7,6,.96);display:none;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(6px);}
+  #lightbox.open{display:flex;}
+  #lightbox img{max-width:92vw;max-height:78vh;border-radius:6px;box-shadow:0 34px 90px rgba(0,0,0,.7),0 0 0 1px rgba(236,203,134,.18);}
+  #lbcap{color:var(--cream);font-family:'Fraunces',serif;font-style:italic;margin-top:20px;font-size:17px;text-align:center;padding:0 20px;}
+  #lightbox .x{position:absolute;top:20px;right:24px;color:var(--cream);font-size:30px;cursor:pointer;line-height:1;opacity:.8;transition:opacity .3s;}
+  #lightbox .x:hover{opacity:1;}
+  #lightbox .nav{position:absolute;top:50%;transform:translateY(-50%);color:var(--gold-light);font-size:42px;cursor:pointer;padding:14px;user-select:none;opacity:.7;transition:opacity .3s;}
+  #lightbox .nav:hover{opacity:1;}
+  #lbPrev{left:4px;} #lbNext{right:4px;}
+
+  /* ---- closing letter ---- */
+  .letter{background:linear-gradient(180deg,var(--panel),var(--card-solid));border:1px solid var(--line-strong);border-radius:12px;
+    padding:46px 30px;box-shadow:var(--shadow);position:relative;}
+  .letter::before,.letter::after{content:"";position:absolute;width:30px;height:30px;border:1px solid var(--gold);opacity:.8;}
+  .letter::before{top:14px;left:14px;border-right:none;border-bottom:none;}
+  .letter::after{bottom:14px;right:14px;border-left:none;border-top:none;}
+  .letter p{font-size:clamp(17.5px,4.5vw,20.5px);margin-bottom:18px;color:var(--cream);}
+  .letter p:first-child{font-family:'Fraunces',serif;font-style:italic;color:var(--gold-light);font-size:1.1em;}
+  .sign{font-family:'Fraunces',serif;font-style:italic;font-size:34px;color:var(--gold-light);text-align:right;margin-top:14px;}
+  .sign::after{content:"";display:block;width:120px;height:1px;margin:10px 0 0 auto;
+    background:linear-gradient(90deg,transparent,var(--gold));}
+  footer{text-align:center;padding:54px 24px 120px;color:var(--taupe);font-style:italic;}
+  footer .orn{margin-bottom:22px;}
+
+  /* ---- music ---- */
+  #music{position:fixed;left:18px;bottom:18px;z-index:85;width:52px;height:52px;border-radius:50%;cursor:pointer;border:1px solid var(--gold);
+    background:var(--card-2);backdrop-filter:blur(10px);color:var(--gold-light);display:none;align-items:center;justify-content:center;
+    font-size:18px;box-shadow:var(--shadow-sm);transition:transform .3s ease;}
+  #music:hover{transform:scale(1.1);}
+  #music::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--line);opacity:0;}
+  #music.playing::after{animation:ring 2.4s ease-out infinite;}
+  @keyframes ring{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
+  #music.playing .eq{animation:eqp 1.1s ease-in-out infinite;}
+  @keyframes eqp{0%,100%{opacity:1}50%{opacity:.4}}
+
+  @media(min-width:680px){
+    .scratch-grid{grid-template-columns:repeat(4,1fr);}
+    .jokes{grid-template-columns:1fr 1fr;}
+    #galGrid{grid-template-columns:repeat(3,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div id="ambience">
+  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+</div>
+<div id="vignette"></div>
+<div id="grain"></div>
+<canvas id="dust"></canvas>
+<div id="progress"></div>
+
+<nav id="chapters">
+  <a href="#shuru" class="active"><span>Aaghaaz</span></a>
+  <a href="#gaana"><span>Hamara gaana</span></a>
+  <a href="#safar"><span>Safar</span></a>
+  <a href="#raaz"><span>Raaz</span></a>
+  <a href="#baatein"><span>Baatein</span></a>
+  <a href="#aage"><span>Aage</span></a>
+  <a href="#sher"><span>Sher</span></a>
+  <a href="#gallery"><span>Tasveerein</span></a>
+  <a href="#khat"><span>Khat</span></a>
+</nav>
+
+<!-- COVER -->
+<div id="cover">
+  <div class="cover-frame">
+    <div class="arch"><img src="photos/2.jpg" alt="" onerror="this.style.display='none'"></div>
+    <div class="orn"><span class="d">✦ ✦ ✦</span></div>
+    <div class="cover-title">حُسنِ جاناں کی تعریف ممکن نہیں</div>
+    <div class="cover-sub">ek choti si duniya, sirf Mahnoor ke liye</div>
+    <button class="enter-btn" id="enterBtn"><span>Click here</span></button>
+    <div class="wink">impress hone ke <b>extra charges</b> hain ✦</div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- intro -->
+  <section id="shuru" class="reveal">
+    <span class="label">3 May 2026 · Dumbo, Brooklyn</span>
+    <h2>Jahan <em>sab shuru</em> hua</h2>
+    <p class="body dropcap">Pehli mulaqat Dumbo, Brooklyn mein hui. Ghanton yunhi paidal chalte rahe, Manhattan ke haseen views ke saath, aur zindagi ki sab se gehri baatein kar daalin. Wohi galiyan jahan “Kal Ho Naa Ho” film hui thi. Aur woh pehli ice cream, jise aap ne kaha tha — “meri zindagi ki sab se achi.”</p>
+    <p class="body">Aur kuch hi din baad, dil se nikla:</p>
+    <div class="quote">I really enjoy your company and love your smile.</div>
+    <p class="body">Wo muskurahat? Aaj tak hamare saath hai.</p>
+    <div class="scroll-hint">scroll · aage chaliye</div>
+  </section>
+
+  <!-- gaana -->
+  <section id="gaana" class="reveal">
+    <span class="label c">Hamara gaana</span>
+    <div class="gaana">
+      <div class="disc-wrap"><div class="disc"></div><div class="tonearm"></div></div>
+      <div class="now">Now playing · for you</div>
+      <div class="lyric">“Aankhon hi aankhon mein hamari baat chal rahi thi…<br>dheere dheere se woh daal gal rahi thi.”</div>
+    </div>
+  </section>
+
+  <!-- safar -->
+  <section id="safar" class="reveal">
+    <span class="label">Hamara safar</span>
+    <h2>Wo baatein jo guzar gayin, par <em>ruki hui</em> hain</h2>
+    <div class="tl">
+      <div class="node reveal"><h3>Zain &amp; Zohaib concert</h3><p>University lawn ki woh lambi walk, <span class="em">Zyara ka chicken shawarma</span>, aur hamara pehla triple chocolate waffle.</p></div>
+      <div class="node reveal"><h3>Pehli Starbucks, barish mein</h3><p>Woh pehli coffee, halki halki baarish ke saath. Cup garam tha, par baatein us se zyada.</p></div>
+      <div class="node reveal"><h3>Sea Cliff Beach</h3><p>Choti si umbrella share ki. Aur jab aap ne paon paani mein bheegaye, <span class="em">mausam aur lehrain dono khush thi.</span></p></div>
+      <div class="node reveal"><h3>Chaand Raat, Jackson Heights</h3><p>Woh ronak, woh raunaq. Aur aik larki ne apne <span class="em">piyare hathon pe mehndi kharab kar di thi.</span></p></div>
+      <div class="node reveal"><h3>Pehli Eid, Manhattan</h3><p>White matching clothes, Jersey se Manhattan ki skyline, Eid brunch at Roca Cafe, aur woh <span class="em">molten lava cake.</span></p></div>
+      <div class="node reveal"><h3>Eid BBQ, skyline ke saath</h3><p>Manhattan skyline, hamara pehla ribeye steak. Long Island ki skyline, woh bench, raat ko waterfront walk… aur <span class="em">pehli baar haath thaame.</span></p></div>
+      <div class="node reveal"><h3>Mahnoor ke liye pehli poem</h3><p>Lafz kam pad gaye, par koshish poori thi. <span class="em">“Husn-e-Jaana ki tareef mumkin nai.”</span></p></div>
+      <div class="node reveal"><h3>Pehla sunset date, Marine Park</h3><p>Aur saath mein pehli grocery shopping. Choti choti cheezein, bari bari yaadein.</p></div>
+      <div class="node reveal"><h3>Hamari pehli furniture shopping</h3><p>Ikea se table, chair, blanket. <span class="em">Ghar basaane ki choti si pyari shuruaat.</span></p></div>
+      <div class="node reveal"><h3>Kababjees</h3><p>Chicken karahi, garam garam soup, aur qahwa. <span class="em">Maza aa gaya.</span></p></div>
+      <div class="node reveal"><h3>Ami ki naan khatai</h3><p>Pakistan se naan khatai aayi, aur sab se pehle <span class="em">Mahnoor ka hissa side pe rakh diya.</span></p></div>
+      <div class="node reveal"><h3>Aap ke exam ke liye</h3><p>NPTE prep ki aik poori website bana di — <span class="em">thori si coding, bohot si niyyat.</span></p></div>
+      <div class="node reveal"><h3>9 ghante, kam se kam</h3><p>Hamari har shift saath. <span class="em">Time guzarta pata hi nahi chalta.</span></p></div>
+      <div class="node reveal"><h3>Pehla trip — DC</h3><p>Aik <span class="em">passenger princess</span> beech beech mein neend se uth kar dil ki baatein karti rahi. Woh hours mere liye sukoon wale the.</p></div>
+      <div class="node reveal"><h3>Lincoln Memorial</h3><p>Aur woh khoobsurat raat, jahan waqt thehar sa gaya tha.</p></div>
+      <div class="node reveal"><h3>Shenandoah National Park</h3><p>Woh shaam, woh pahar, woh aap. <span class="em">Bas itna kaafi tha.</span></p></div>
+      <div class="node reveal"><h3>Long drives</h3><p>Jahan gaane chalte hain, baatein khatam nahi hoti, aur manzil se zyada raasta pyara lagta hai.</p></div>
+    </div>
+  </section>
+
+  <!-- scratch -->
+  <section id="raaz" class="reveal">
+    <span class="label">aapke liye chhupaya hai</span>
+    <h2>Scratch… andar <em>kuch</em> hai</h2>
+    <p class="tip">ungli se halka halka scratch karein</p>
+    <div class="scratch-grid" id="scratchGrid"></div>
+  </section>
+
+  <!-- jokes -->
+  <section id="baatein" class="reveal">
+    <span class="label">sirf hum dono samajhte hain</span>
+    <h2>Kuch chhoti chhoti <em>baatein</em></h2>
+    <div class="jokes">
+      <div class="joke reveal"><button class="jbtn" data-resp="r1">Aaj khana khaya?</button><div class="jresp" id="r1">3 Prince biscuits aur chai count nahi hote, madam. Ab proper khana khaiye… ya phir future mein hum apne hathon se khila dein?</div></div>
+      <div class="joke reveal"><div style="margin-bottom:10px;color:var(--cream-soft);font-style:italic;">Jacket saath hai?</div><div class="switch" id="jacket"><div class="track"><div class="knob"></div></div><em id="jacketTxt">nahi (jaisa hamesha)</em></div><div class="jresp" id="rj"></div></div>
+      <div class="joke reveal"><button class="jbtn" data-resp="r2">Send Zelle</button><div class="jresp" id="r2">Account blocked. (Phir se.) Bank of America aap ko Zelle nahi karne dete. Rehne dein, cash de dena. Aur haan — azab nahi hoga, promise.</div></div>
+      <div class="joke reveal"><button class="jbtn" data-resp="r3">Book Physical Therapy</button><div class="jresp" id="r3">Appointment full. Aur waise bhi, PT ka license cancel ho jata agar hum us din tangon par zyada enthusiasm dikha dete. Front desk se poochiye ga.</div></div>
+      <div class="joke reveal"><button class="jbtn" id="mathsBtn">Hisaab nikaalein (maths weak hai)</button><div class="jresp" id="r4"><div class="calc" id="calc"></div><div style="margin-top:10px;">Bas. Aap rehne dein. Hisaab khate mein likh diya hai — kabhi clear mat karna.</div></div></div>
+      <div class="joke reveal"><button class="jbtn" id="nazarBtn">Nazar utaarni hai?</button><div class="jresp" id="r5">Ho gayi. Saat mirchein qurban. Ab dobara itni pyari mat lagna, warna roz utaarni padegi.</div></div>
+    </div>
+  </section>
+
+  <!-- plans -->
+  <section id="aage" class="reveal">
+    <span class="label">abhi to shuruaat hai</span>
+    <h2>Jo abhi <em>baqi</em> hai</h2>
+    <div class="chips">
+      <div class="chip reveal"><span class="ic">🎤</span><span><b>Qawwali night</b> <span class="t">— yahan ki experience aap ke saath</span></span></div>
+      <div class="chip reveal"><span class="ic">🍜</span><span><b>Steinway Street</b> <span class="t">— wo achi food spot pending hai</span></span></div>
+      <div class="chip reveal"><span class="ic">🍲</span><span><b>Aloo Ghosht</b> <span class="t">— fresh fresh, garam garam</span></span></div>
+      <div class="chip reveal"><span class="ic">🌙</span><span><b>Asli chandni raat</b> <span class="t">— chand aur sitaron wali jagah</span></span></div>
+    </div>
+  </section>
+
+  <!-- sher -->
+  <section id="sher" class="reveal">
+    <div class="orn" style="margin-bottom:24px;"><span class="d">✦</span></div>
+    <div class="sher">
+      <p class="sher-ur" dir="rtl">کراچی سے وہ ہیں، مگر نیویارک بہت پسند ہے</p>
+      <p class="sher-ur" dir="rtl">لوگ تو اُن کی پی ٹی کی تعریف کرتے ہیں،<br>مگر ہمیں اُن کی مسکراہٹ بہت پسند ہے</p>
+      <div class="sher-roman">“Karachi se woh hain, magar New York bohot pasand hai…<br>Log toh unki PT ki tareef karte hain, magar hamein unki muskurahat bohot pasand hai.”</div>
+    </div>
+  </section>
+
+  <!-- gallery -->
+  <section id="gallery" class="reveal">
+    <div class="urdu-h" dir="rtl">حُسنِ جاناں</div>
+    <div class="gal-cap">Husn-e-Jaana ki tareef mumkin nai</div>
+    <div id="galGrid">
+      <figure class="gcard reveal" data-cap="Hamari pehli tasveer — barish wali coffee"><img src="photos/1.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Hamari pehli tasveer · barish wali coffee</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Sunset, chai, aur aap"><img src="photos/2.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Sunset, chai, aur aap</figcaption></figure>
+      <figure class="gcard reveal" data-cap="DC — hamara pehla trip"><img src="photos/3.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>DC · hamara pehla trip</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Woh sham, woh roshni"><img src="photos/4.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Woh sham, woh roshni</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Waterfront walk, skyline ke saath"><img src="photos/5.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Waterfront walk · skyline ke saath</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Chaand Raat, Jackson Heights"><img src="photos/6.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Chaand Raat · Jackson Heights</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Aur chaand bhi gawah hai"><img src="photos/7.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Aur chaand bhi gawah hai</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Sheher ki raat, paani ke us paar"><img src="photos/8.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Sheher ki raat · paani ke us paar</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Discovery — Air & Space"><img src="photos/9.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>Discovery · Air &amp; Space</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Mahnoor S. — Gr Hot Pistachio Latte"><img src="photos/10.jpg" alt="" loading="lazy"><span class="plus">+</span><figcaption>“Mahnoor S. · Gr Hot Pistachio Latte”</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Piyare hathon pe mehndi"><img src="photos/11.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"><span class="plus">+</span><figcaption>Piyare hathon pe mehndi</figcaption></figure>
+      <figure class="gcard reveal" data-cap="Sunset, aur woh sukoon"><img src="photos/12.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"><span class="plus">+</span><figcaption>Sunset, aur woh sukoon</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- closing -->
+  <section id="khat" class="reveal">
+    <span class="label">aakhri baat</span>
+    <h2>Sirf itna <em>kehna</em> tha</h2>
+    <div class="letter">
+      <p>Mahnoor,</p>
+      <p>Sab kuch Dumbo ki aik ice cream se shuru hua, aur ab aisa lagta hai jaise universe humein pakad pakad ke paas la rahi hai. Aap ka clinic kabhi mere office ke paas, kabhi mere ghar ke paas. Ittifaq? Hum toh nahi maante.</p>
+      <p>Aap ko har roz yaad dilana padta hai — khana khaiye, jacket le jaiye, paani piyiye. Aur sach kahein, hamein ye yaad dilana sab se pyara kaam lagta hai.</p>
+      <p>Aap ne kaha tha hum in person itne romantic nahi lagte. Toh ye poori chhoti si duniya isliye bani — taake aap ko pata chale, hum hain.</p>
+      <div class="quote">Jab aap saath hoti hain, ghante guzar jate hain aur pata hi nahi chalta. Aur jab aap saath nahi hoti, time hi nahi guzarta.</div>
+      <p>Husn-e-Jaana ki tareef mumkin nai.</p>
+      <div class="sign">Seemab</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="orn"><span class="d">✦ ✦ ✦</span></div>
+    bani bohot saari dua ke saath, sirf aap ke liye
+  </footer>
+</main>
+
+<!-- lightbox -->
+<div id="lightbox">
+  <span class="x" id="lbClose">×</span>
+  <span class="nav" id="lbPrev">‹</span>
+  <img id="lbImg" src="" alt="">
+  <div id="lbcap"></div>
+  <span class="nav" id="lbNext">›</span>
+</div>
+
+<button id="music"><span class="eq">♫</span></button>
+
+<audio id="audio" loop preload="auto">
+  <source src="song.mp3" type="audio/mpeg" />
+  <source src="song.m4a" type="audio/mp4" />
+</audio>
+
+<script>
+  /* gold dust particles */
+  (function(){
+    const c=document.getElementById('dust'),x=c.getContext('2d');let w,h,parts=[];
+    function rs(){w=c.width=innerWidth;h=c.height=innerHeight;}
+    rs();addEventListener('resize',rs);
+    for(let i=0;i<42;i++)parts.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.7+.4,s:Math.random()*.35+.08,o:Math.random()*.45+.15});
+    function tick(){
+      x.clearRect(0,0,w,h);
+      const gold=getComputedStyle(document.body).getPropertyValue('--gold-light').trim()||'#eccb86';
+      for(const p of parts){p.y-=p.s;if(p.y<-5){p.y=h+5;p.x=Math.random()*w;}
+        x.beginPath();x.globalAlpha=p.o;x.fillStyle=gold;x.arc(p.x,p.y,p.r,0,7);x.fill();}
+      x.globalAlpha=1;requestAnimationFrame(tick);
+    }tick();
+  })();
+
+  /* enter */
+  const cover=document.getElementById('cover'),main=document.getElementById('main'),audio=document.getElementById('audio'),musicBtn=document.getElementById('music');
+  document.getElementById('enterBtn').addEventListener('click',()=>{
+    cover.classList.add('gone');main.classList.add('show');musicBtn.style.display='flex';musicBtn.classList.add('playing');
+    audio.volume=0;const pr=audio.play();if(pr&&pr.then)pr.then(fade).catch(()=>musicBtn.classList.remove('playing'));
+    setTimeout(()=>scrollTo({top:0,behavior:'smooth'}),150);
+  });
+  function fade(){let v=0;const t=setInterval(()=>{v+=.04;if(v>=.72){v=.72;clearInterval(t);}audio.volume=v;},120);}
+  musicBtn.addEventListener('click',()=>{if(audio.paused){audio.play();musicBtn.classList.add('playing');}else{audio.pause();musicBtn.classList.remove('playing');}});
+
+  /* progress + chapter active */
+  const prog=document.getElementById('progress'),chapLinks=[...document.querySelectorAll('#chapters a')];
+  addEventListener('scroll',()=>{
+    const st=scrollY,dh=document.body.scrollHeight-innerHeight;
+    prog.style.width=(dh>0?st/dh*100:0)+'%';
+  },{passive:true});
+  const secObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){
+    chapLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('main section').forEach(s=>secObs.observe(s));
+
+  /* reveal */
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* jokes */
+  document.querySelectorAll('.jbtn[data-resp]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.resp).classList.toggle('open')));
+  const jacket=document.getElementById('jacket'),jacketTxt=document.getElementById('jacketTxt'),rj=document.getElementById('rj');
+  jacket.addEventListener('click',()=>{jacket.classList.toggle('on');
+    if(jacket.classList.contains('on')){jacketTxt.textContent='haan! (miracle)';rj.textContent='Mashallah! Aaj toh sach mein miracle ho gaya. Proud of you.';}
+    else{jacketTxt.textContent='nahi (jaisa hamesha)';rj.textContent='Pata tha. Aap is mamle mein bohot buri hain. Koi baat nahi — rescue mission hamesha ready hai.';}
+    rj.classList.add('open');});
+  document.getElementById('mathsBtn').addEventListener('click',()=>{
+    document.getElementById('r4').classList.add('open');
+    const steps=['70','70 + 59','70 + 59 + 255','70 + 59 + 255 + 13','70 + 59 + 255 + 13 + 89','70 + 59 + 255 + 13 + 89 = 486'];
+    const calc=document.getElementById('calc');let i=0;calc.textContent='';
+    const t=setInterval(()=>{calc.textContent=steps[i];i++;if(i>=steps.length)clearInterval(t);},420);});
+  document.getElementById('nazarBtn').addEventListener('click',()=>{
+    document.getElementById('r5').classList.add('open');
+    for(let i=0;i<7;i++){const m=document.createElement('div');m.textContent=Math.random()>.5?'🌶️':'🔥';
+      m.style.cssText='position:fixed;left:50%;top:55%;z-index:99;font-size:26px;pointer-events:none;';document.body.appendChild(m);
+      const a=(Math.PI*2/7)*i,d=120+Math.random()*60;
+      m.animate([{transform:'translate(-50%,-50%) scale(.4)',opacity:1},{transform:`translate(${Math.cos(a)*d-50}px,${Math.sin(a)*d-50}px) scale(1.3)`,opacity:0}],{duration:1100,easing:'ease-out'});
+      setTimeout(()=>m.remove(),1100);}});
+
+  /* scratch */
+  (function(){
+    const notes=[
+      "Aap ki pehli muskurahat aaj bhi hamare paas hai",
+      "Zindagi ki sab se achi ice cream… wahi Dumbo wali",
+      "Dumbo. Hamari jagah. Hamesha.",
+      "‘Mahnoor’ playlist: 48 gaane, aur ginti jaari",
+      "Jacket bhool gayi? Hum garmi ban kar aa jayenge",
+      "Aap ka kamyaab hona hamein sab se aziz hai",
+      "Universe humein paas la rahi hai, aur hum khush hain",
+      "Husn-e-Jaana ki tareef… sach mein mumkin nai"
+    ];
+    const grid=document.getElementById('scratchGrid');
+    notes.forEach(text=>{const card=document.createElement('div');card.className='scratch';
+      const n=document.createElement('div');n.className='note';n.textContent=text;
+      const cv=document.createElement('canvas');card.appendChild(n);card.appendChild(cv);grid.appendChild(card);init(card,cv);});
+    function init(card,cv){const ctx=cv.getContext('2d');let drawing=false,done=false;
+      function size(){const r=card.getBoundingClientRect(),dpr=devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+        const g=ctx.createLinearGradient(0,0,r.width,r.height);g.addColorStop(0,'#eccb86');g.addColorStop(.5,'#c9a35d');g.addColorStop(1,'#8c6c34');
+        ctx.globalCompositeOperation='source-over';ctx.fillStyle=g;ctx.fillRect(0,0,r.width,r.height);
+        ctx.fillStyle='rgba(27,19,12,.8)';ctx.font="italic 15px 'Fraunces',serif";ctx.textAlign='center';ctx.fillText('Scratch ✦',r.width/2,r.height/2);}
+      requestAnimationFrame(()=>requestAnimationFrame(size));
+      function pos(e){const r=cv.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
+      function scr(e){if(done)return;e.preventDefault();const p=pos(e);ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,22,0,7);ctx.fill();}
+      function chk(){if(done)return;try{const d=ctx.getImageData(0,0,cv.width,cv.height).data;let c=0,n=0;for(let i=3;i<d.length;i+=40){n++;if(d[i]===0)c++;}if(c/n>.5){done=true;card.classList.add('done');}}catch(_){}}
+      cv.addEventListener('mousedown',e=>{drawing=true;scr(e);});addEventListener('mousemove',e=>{if(drawing)scr(e);});addEventListener('mouseup',()=>{if(drawing){drawing=false;chk();}});
+      cv.addEventListener('touchstart',e=>{drawing=true;scr(e);},{passive:false});cv.addEventListener('touchmove',e=>{if(drawing)scr(e);},{passive:false});cv.addEventListener('touchend',()=>{if(drawing){drawing=false;chk();}});
+      addEventListener('resize',()=>{if(!done)size();});}
+  })();
+
+  /* lightbox (handles dynamically-removed missing slots) */
+  (function(){
+    const grid=document.getElementById('galGrid');
+    const lb=document.getElementById('lightbox'),img=document.getElementById('lbImg'),cap=document.getElementById('lbcap');let idx=0;
+    function figs(){return [...grid.querySelectorAll('.gcard')];}
+    function show(i){const arr=figs();if(!arr.length)return;idx=(i+arr.length)%arr.length;const f=arr[idx];img.src=f.querySelector('img').src;cap.textContent=f.dataset.cap;lb.classList.add('open');}
+    grid.addEventListener('click',e=>{const f=e.target.closest('.gcard');if(!f)return;show(figs().indexOf(f));});
+    document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');
+    document.getElementById('lbPrev').onclick=e=>{e.stopPropagation();show(idx-1);};
+    document.getElementById('lbNext').onclick=e=>{e.stopPropagation();show(idx+1);};
+    lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open');});
+    addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1);});
+    let sx=0;lb.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+    lb.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)show(idx+(dx<0?1:-1));});
+  })();
+
+  /* gentle tilt on cards (desktop) */
+  if(matchMedia('(hover:hover)').matches){
+    document.querySelectorAll('.joke,.node,.chip').forEach(el=>{
+      el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+        el.style.transform=`perspective(800px) rotateX(${-py*2.4}deg) rotateY(${px*2.4}deg)`;});
+      el.addEventListener('mouseleave',()=>el.style.transform='');
+    });
+  }
+</script>
+</body>
+</html>
